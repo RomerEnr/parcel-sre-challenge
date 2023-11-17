@@ -38,4 +38,18 @@ public class GreetingControllerTest {
         .andExpect(status().isOk())
         .andExpect(content().string("Dear Sir or Madam"));
   }
+
+  @Test
+  public void testGreetingForCustomerC() throws Exception {
+    mockMvc.perform(get("/greeting/C"))
+        .andExpect(status().isOk())
+        .andExpect(content().string("Moin"));
+  }
+  @Test
+  public void testGreetingForUnknownCustomer() throws Exception {
+    mockMvc.perform(get("/greeting/Z"))
+        .andExpect(status().isNotFound())
+        .andExpect(content().string("Customer ID 'Z' not found."));
+  }
+
 }
