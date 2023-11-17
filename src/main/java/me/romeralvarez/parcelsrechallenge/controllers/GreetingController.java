@@ -12,7 +12,7 @@ public class GreetingController {
 
   private GreetingService greetingService;
 
-  @GetMapping({"/greeting/{customerId}"})
+  @GetMapping("/greeting/{customerId}")
   public String greeting(@PathVariable String customerId) {
     return greetingService.greet(customerId);
   }

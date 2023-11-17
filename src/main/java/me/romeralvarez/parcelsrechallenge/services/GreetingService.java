@@ -5,10 +5,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class GreetingService {
 
+
   public String greet(String customerId) {
+    String greeting;
     if (customerId.equals("A")) {
-      return "Hi";
+      greeting = "Hi";
+    } else {
+      greeting = "Dear Sir or Madam";
     }
-    return "Hello";
+    return greeting;
   }
 }
