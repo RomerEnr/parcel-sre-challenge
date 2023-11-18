@@ -7,11 +7,13 @@ on:
       - '**.java'
       - 'pom.xml'
       - 'Dockerfile'
+      - '.github/workflows/**.yml'
   pull_request:
     branches: [ main ]
     paths:
       - '**.java'
       - 'pom.xml'
+      - '.github/workflows/**.yml'
 
 jobs:
   build:
