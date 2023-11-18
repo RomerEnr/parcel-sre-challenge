@@ -86,6 +86,14 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
+      - name: Determine Docker Tags
+        id: docker_tags
+        run: |
+          echo "LATEST_TAG=${{ secrets.DOCKERHUB_USERNAME }}/parcel-sre-challenge:latest" >> $GITHUB_ENV
+          if [ "${{ needs.semantic-release.outputs.version }}" != "" ]; then
+            echo "SEMANTIC_TAG=${{ secrets.DOCKERHUB_USERNAME }}/parcel-sre-challenge:${{ needs.semantic-release.outputs.version }}" >> $GITHUB_ENV
+          fi
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
@@ -93,8 +101,8 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/parcel-sre-challenge:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/parcel-sre-challenge:${{ needs.semantic-release.outputs.version != '' && needs.semantic-release.outputs.version || 'latest' }}
+            ${{ env.LATEST_TAG }}
+            ${{ env.SEMANTIC_TAG }}
 
       - name: Inspect Image
-        run: docker buildx imagetools inspect ${{ secrets.DOCKERHUB_USERNAME }}/parcel-sre-challenge:latest
+        run: docker buildx imagetools inspect ${{ env.LATEST_TAG }}
